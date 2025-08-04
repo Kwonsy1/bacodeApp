@@ -45,5 +45,7 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>이 앱은 바코드와 QR코드를 스캔하기 위해 카메라 권한이 필요합니다.</string>
 </dict>
 </plist>
