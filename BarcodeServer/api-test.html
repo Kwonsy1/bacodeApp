@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcode API 테스트</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .section { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        .section h3 { margin-top: 0; color: #333; }
+        input, select, button { margin: 5px; padding: 8px; }
+        button { background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .result { background: #f8f9fa; padding: 15px; border-radius: 4px; margin-top: 10px; white-space: pre-wrap; font-family: monospace; }
+        .error { background: #f8d7da; color: #721c24; }
+        .success { background: #d4edda; color: #155724; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Barcode Server API 테스트</h1>
+    
+    <div class="section">
+        <h3>📱 바코드 생성</h3>
+        <input type="text" id="barcodeValue" placeholder="바코드 값 (예: 1234567890123)" required>
+        <select id="barcodeType">
+            <option value="EAN13">EAN13</option>
+            <option value="UPC">UPC</option>
+            <option value="Code128">Code128</option>
+            <option value="QR">QR</option>
+        </select>
+        <input type="text" id="phoneModel" placeholder="휴대폰 모델 (예: iPhone 15 Pro)">
+        <button onclick="createBarcode()">바코드 생성</button>
+        <div id="createResult" class="result" style="display:none;"></div>
+    </div>
+
+    <div class="section">
+        <h3>📋 전체 바코드 조회</h3>
+        <button onclick="getAllBarcodes()">전체 조회</button>
+        <div id="allResult" class="result" style="display:none;"></div>
+    </div>
+
+    <div class="section">
+        <h3>🔍 ID로 바코드 조회</h3>
+        <input type="number" id="searchId" placeholder="바코드 ID">
+        <button onclick="getBarcodeById()">ID로 조회</button>
+        <div id="idResult" class="result" style="display:none;"></div>
+    </div>
+
+    <div class="section">
+        <h3>🔍 바코드 값으로 조회</h3>
+        <input type="text" id="searchValue" placeholder="바코드 값">
+        <button onclick="getBarcodeByValue()">값으로 조회</button>
+        <div id="valueResult" class="result" style="display:none;"></div>
+    </div>
+
+    <div class="section">
+        <h3>📱 휴대폰 모델로 검색</h3>
+        <input type="text" id="searchModel" placeholder="휴대폰 모델명">
+        <button onclick="searchByModel()">모델로 검색</button>
+        <div id="modelResult" class="result" style="display:none;"></div>
+    </div>
+
+    <div class="section">
+        <h3>📊 통계</h3>
+        <button onclick="getStats()">바코드 개수 조회</button>
+        <div id="statsResult" class="result" style="display:none;"></div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8080/api/barcodes';
+
+        function showResult(elementId, data, isError = false) {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            element.className = `result ${isError ? 'error' : 'success'}`;
+            element.textContent = JSON.stringify(data, null, 2);
+        }
+
+        async function createBarcode() {
+            const barcodeValue = document.getElementById('barcodeValue').value;
+            const barcodeType = document.getElementById('barcodeType').value;
+            const phoneModel = document.getElementById('phoneModel').value;
+
+            if (!barcodeValue) {
+                alert('바코드 값을 입력해주세요.');
+                return;
+            }
+
+            try {
+                const response = await fetch(API_BASE, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ barcodeValue, barcodeType, phoneModel })
+                });
+                const data = await response.json();
+                showResult('createResult', data, !response.ok);
+            } catch (error) {
+                showResult('createResult', { error: error.message }, true);
+            }
+        }
+
+        async function getAllBarcodes() {
+            try {
+                const response = await fetch(API_BASE);
+                const data = await response.json();
+                showResult('allResult', data, !response.ok);
+            } catch (error) {
+                showResult('allResult', { error: error.message }, true);
+            }
+        }
+
+        async function getBarcodeById() {
+            const id = document.getElementById('searchId').value;
+            if (!id) {
+                alert('바코드 ID를 입력해주세요.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/${id}`);
+                const data = await response.json();
+                showResult('idResult', data, !response.ok);
+            } catch (error) {
+                showResult('idResult', { error: error.message }, true);
+            }
+        }
+
+        async function getBarcodeByValue() {
+            const value = document.getElementById('searchValue').value;
+            if (!value) {
+                alert('바코드 값을 입력해주세요.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/value/${encodeURIComponent(value)}`);
+                const data = await response.json();
+                showResult('valueResult', data, !response.ok);
+            } catch (error) {
+                showResult('valueResult', { error: error.message }, true);
+            }
+        }
+
+        async function searchByModel() {
+            const model = document.getElementById('searchModel').value;
+            if (!model) {
+                alert('휴대폰 모델명을 입력해주세요.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/search?productName=${encodeURIComponent(model)}`);
+                const data = await response.json();
+                showResult('modelResult', data, !response.ok);
+            } catch (error) {
+                showResult('modelResult', { error: error.message }, true);
+            }
+        }
+
+        async function getStats() {
+            try {
+                const response = await fetch(`${API_BASE}/stats/count`);
+                const data = await response.json();
+                showResult('statsResult', data, !response.ok);
+            } catch (error) {
+                showResult('statsResult', { error: error.message }, true);
+            }
+        }
+    </script>
+</body>
+</html>

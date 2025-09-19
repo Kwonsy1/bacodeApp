@@ -38,6 +38,24 @@ dependencies:
   # Barcode scanning libraries
   mobile_scanner: ^5.0.14
   permission_handler: ^11.3.1
+  
+  # UI and State Management
+  provider: ^6.1.2
+  flutter_slidable: ^3.1.1
+  intl: ^0.19.0
+  
+  # Local Storage
+  shared_preferences: ^2.3.3
+  
+  # Network
+  http: ^1.2.2
+  
+  # Device Info
+  device_info_plus: ^10.1.2
+  
+  # UI Components
+  badges: ^3.1.2
+  lottie: ^3.2.0
 
 dev_dependencies:
   flutter_test:

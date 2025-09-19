@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.barcodeserver.mapper.BarcodeMapper">
+
+
+    <!-- 단일 바코드 삽입 -->
+    <insert id="insertBarcode" parameterType="BarcodeDto" useGeneratedKeys="true" keyProperty="barcodeId">
+        INSERT INTO barcodes (
+            barcode_value, barcode_type, phone_model, status, created_date
+        ) VALUES (
+            #{barcodeValue}, #{barcodeType}, #{phoneModel}, #{status}, #{createdDate}
+        )
+    </insert>
+
+    <!-- 다중 바코드 삽입 -->
+    <insert id="insertBarcodes" parameterType="java.util.List">
+        INSERT INTO barcodes (
+            barcode_value, barcode_type, phone_model, status, created_date
+        ) VALUES
+        <foreach collection="barcodes" item="barcode" separator=",">
+            (#{barcode.barcodeValue}, #{barcode.barcodeType}, #{barcode.phoneModel}, 
+             #{barcode.status}, #{barcode.createdDate})
+        </foreach>
+    </insert>
+
+    <!-- ID로 바코드 조회 -->
+    <select id="selectBarcodeById" parameterType="Long" resultType="BarcodeDto">
+        SELECT * FROM barcodes WHERE barcode_id = #{barcodeId}
+    </select>
+
+    <!-- 바코드 값으로 조회 -->
+    <select id="selectBarcodeByValue" parameterType="String" resultType="BarcodeDto">
+        SELECT * FROM barcodes WHERE barcode_value = #{barcodeValue}
+    </select>
+
+    <!-- 전체 바코드 조회 -->
+    <select id="selectAllBarcodes" resultType="BarcodeDto">
+        SELECT * FROM barcodes ORDER BY created_date DESC
+    </select>
+
+    <!-- 타입별 바코드 조회 -->
+    <select id="selectBarcodesByType" parameterType="String" resultType="BarcodeDto">
+        SELECT * FROM barcodes WHERE barcode_type = #{barcodeType} ORDER BY created_date DESC
+    </select>
+
+    <!-- 카테고리별 바코드 조회 -->
+    <select id="selectBarcodesByCategory" parameterType="String" resultType="BarcodeDto">
+        SELECT * FROM barcodes WHERE status = #{category} ORDER BY created_date DESC
+    </select>
+
+    <!-- 상태별 바코드 조회 -->
+    <select id="selectBarcodesByStatus" parameterType="String" resultType="BarcodeDto">
+        SELECT * FROM barcodes WHERE status = #{status} ORDER BY created_date DESC
+    </select>
+
+    <!-- 휴대폰 모델로 바코드 조회 -->
+    <select id="selectBarcodesByProductName" parameterType="String" resultType="BarcodeDto">
+        SELECT * FROM barcodes WHERE phone_model LIKE CONCAT('%', #{productName}, '%') ORDER BY created_date DESC
+    </select>
+
+    <!-- 바코드 정보 업데이트 -->
+    <update id="updateBarcode" parameterType="BarcodeDto">
+        UPDATE barcodes 
+        SET barcode_value = #{barcodeValue},
+            barcode_type = #{barcodeType},
+            phone_model = #{phoneModel},
+            status = #{status},
+            updated_date = #{updatedDate}
+        WHERE barcode_id = #{barcodeId}
+    </update>
+
+    <!-- 바코드 상태 업데이트 -->
+    <update id="updateBarcodeStatus">
+        UPDATE barcodes 
+        SET status = #{status}, updated_date = NOW()
+        WHERE barcode_id = #{barcodeId}
+    </update>
+
+    <!-- ID로 바코드 삭제 -->
+    <delete id="deleteBarcodeById" parameterType="Long">
+        DELETE FROM barcodes WHERE barcode_id = #{barcodeId}
+    </delete>
+
+    <!-- 바코드 값으로 삭제 -->
+    <delete id="deleteBarcodeByValue" parameterType="String">
+        DELETE FROM barcodes WHERE barcode_value = #{barcodeValue}
+    </delete>
+
+    <!-- 전체 바코드 수 -->
+    <select id="countTotalBarcodes" resultType="int">
+        SELECT COUNT(*) FROM barcodes
+    </select>
+
+    <!-- 타입별 바코드 수 -->
+    <select id="countBarcodesByType" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM barcodes WHERE barcode_type = #{barcodeType}
+    </select>
+
+    <!-- 페이징된 바코드 조회 -->
+    <select id="selectBarcodesPaginated" resultType="BarcodeDto">
+        SELECT * FROM barcodes 
+        ORDER BY created_date DESC 
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+</mapper>

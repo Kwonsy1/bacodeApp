@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:bacodeapp/screens/barcode_scanner_screen.dart';
+import 'package:provider/provider.dart';
+import 'providers/barcode_provider.dart';
+import 'screens/home_screen.dart';
 
 void main() {
-  runApp(const BarcodeApp());
+  runApp(
+    MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => BarcodeProvider())],
+      child: const BarcodeApp(),
+    ),
+  );
 }
 
 class BarcodeApp extends StatelessWidget {
@@ -16,8 +23,8 @@ class BarcodeApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: const BarcodeScannerScreen(),
+      home: const HomeScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
-

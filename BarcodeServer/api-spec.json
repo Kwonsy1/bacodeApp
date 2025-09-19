@@ -1,0 +1,795 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "Barcode Server API",
+        "description": "\ubc14\ucf54\ub4dc \uad00\ub9ac \uc2dc\uc2a4\ud15c REST API \ubb38\uc11c",
+        "contact": {
+            "name": "Developer",
+            "email": "developer@example.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8080",
+            "description": "Local Development Server"
+        },
+        {
+            "url": "http://192.168.0.32:8080",
+            "description": "Local Network Server"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Barcode API",
+            "description": "\ubc14\ucf54\ub4dc \uad00\ub9ac API"
+        }
+    ],
+    "paths": {
+        "/api/barcodes/{barcodeId}": {
+            "get": {
+                "tags": [
+                    "Barcode API"
+                ],
+                "summary": "ID\ub85c \ubc14\ucf54\ub4dc \uc870\ud68c",
+                "description": "\ubc14\ucf54\ub4dc ID\ub85c \ubc14\ucf54\ub4dc \uc815\ubcf4\ub97c \uc870\ud68c\ud569\ub2c8\ub2e4",
+                "operationId": "getBarcodeById",
+                "parameters": [
+                    {
+                        "name": "barcodeId",
+                        "in": "path",
+                        "description": "\ubc14\ucf54\ub4dc ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "\uc11c\ubc84 \uc624\ub958",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "\ubc14\ucf54\ub4dc\ub97c \ucc3e\uc744 \uc218 \uc5c6\uc74c",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "\uc870\ud68c \uc131\uacf5",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Barcode API"
+                ],
+                "summary": "\ubc14\ucf54\ub4dc \uc815\ubcf4 \uc218\uc815",
+                "description": "\ubc14\ucf54\ub4dc \uc815\ubcf4\ub97c \uc218\uc815\ud569\ub2c8\ub2e4",
+                "operationId": "updateBarcode",
+                "parameters": [
+                    {
+                        "name": "barcodeId",
+                        "in": "path",
+                        "description": "\ubc14\ucf54\ub4dc ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BarcodeDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "\uc218\uc815 \uc131\uacf5",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "\uc11c\ubc84 \uc624\ub958",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "\ubc14\ucf54\ub4dc\ub97c \ucc3e\uc744 \uc218 \uc5c6\uc74c",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Barcode API"
+                ],
+                "summary": "\ubc14\ucf54\ub4dc \uc0ad\uc81c (ID)",
+                "description": "\ubc14\ucf54\ub4dc ID\ub85c \ubc14\ucf54\ub4dc\ub97c \uc0ad\uc81c\ud569\ub2c8\ub2e4",
+                "operationId": "deleteBarcodeById",
+                "parameters": [
+                    {
+                        "name": "barcodeId",
+                        "in": "path",
+                        "description": "\ubc14\ucf54\ub4dc ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "\uc11c\ubc84 \uc624\ub958",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "\uc0ad\uc81c \uc131\uacf5",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "\ubc14\ucf54\ub4dc\ub97c \ucc3e\uc744 \uc218 \uc5c6\uc74c",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/barcodes": {
+            "get": {
+                "tags": [
+                    "Barcode API"
+                ],
+                "summary": "\uc804\uccb4 \ubc14\ucf54\ub4dc \uc870\ud68c",
+                "description": "\ubaa8\ub4e0 \ubc14\ucf54\ub4dc \ubaa9\ub85d\uc744 \uc870\ud68c\ud569\ub2c8\ub2e4",
+                "operationId": "getAllBarcodes",
+                "responses": {
+                    "500": {
+                        "description": "\uc11c\ubc84 \uc624\ub958",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "\uc870\ud68c \uc131\uacf5",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Barcode API"
+                ],
+                "summary": "\ubc14\ucf54\ub4dc \uc0dd\uc131",
+                "description": "\uc0c8\ub85c\uc6b4 \ubc14\ucf54\ub4dc\ub97c \uc0dd\uc131\ud569\ub2c8\ub2e4",
+                "operationId": "createBarcode",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BarcodeDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "500": {
+                        "description": "\uc11c\ubc84 \uc624\ub958",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "\ubc14\ucf54\ub4dc \uc0dd\uc131 \uc131\uacf5",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "\uc774\ubbf8 \uc874\uc7ac\ud558\ub294 \ubc14\ucf54\ub4dc",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/barcodes/batch": {
+            "post": {
+                "tags": [
+                    "Barcode API"
+                ],
+                "summary": "\ub2e4\uc911 \ubc14\ucf54\ub4dc \uc0dd\uc131",
+                "description": "\uc5ec\ub7ec \ubc14\ucf54\ub4dc\ub97c \ud55c\ubc88\uc5d0 \uc0dd\uc131\ud569\ub2c8\ub2e4",
+                "operationId": "createBarcodes",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/BarcodeDto"
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "\ubc14\ucf54\ub4dc\ub4e4 \uc0dd\uc131 \uc131\uacf5",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "\uc11c\ubc84 \uc624\ub958",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/barcodes/{barcodeId}/status": {
+            "patch": {
+                "tags": [
+                    "Barcode API"
+                ],
+                "summary": "\ubc14\ucf54\ub4dc \uc0c1\ud0dc \ubcc0\uacbd",
+                "description": "\ubc14\ucf54\ub4dc\uc758 \uc0c1\ud0dc\ub97c \ubcc0\uacbd\ud569\ub2c8\ub2e4",
+                "operationId": "updateBarcodeStatus",
+                "parameters": [
+                    {
+                        "name": "barcodeId",
+                        "in": "path",
+                        "description": "\ubc14\ucf54\ub4dc ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "\ubcc0\uacbd\ud560 \uc0c1\ud0dc (ACTIVE, INACTIVE)",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "\uc0c1\ud0dc \ubcc0\uacbd \uc131\uacf5",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "\uc11c\ubc84 \uc624\ub958",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/barcodes/value/{barcodeValue}": {
+            "get": {
+                "tags": [
+                    "Barcode API"
+                ],
+                "summary": "\ubc14\ucf54\ub4dc \uac12\uc73c\ub85c \uc870\ud68c",
+                "description": "\ubc14\ucf54\ub4dc \uac12\uc73c\ub85c \ubc14\ucf54\ub4dc \uc815\ubcf4\ub97c \uc870\ud68c\ud569\ub2c8\ub2e4",
+                "operationId": "getBarcodeByValue",
+                "parameters": [
+                    {
+                        "name": "barcodeValue",
+                        "in": "path",
+                        "description": "\ubc14\ucf54\ub4dc \uac12",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "\uc11c\ubc84 \uc624\ub958",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "\ubc14\ucf54\ub4dc\ub97c \ucc3e\uc744 \uc218 \uc5c6\uc74c",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "\uc870\ud68c \uc131\uacf5",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Barcode API"
+                ],
+                "summary": "\ubc14\ucf54\ub4dc \uc0ad\uc81c (\uac12)",
+                "description": "\ubc14\ucf54\ub4dc \uac12\uc73c\ub85c \ubc14\ucf54\ub4dc\ub97c \uc0ad\uc81c\ud569\ub2c8\ub2e4",
+                "operationId": "deleteBarcodeByValue",
+                "parameters": [
+                    {
+                        "name": "barcodeValue",
+                        "in": "path",
+                        "description": "\ubc14\ucf54\ub4dc \uac12",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "\uc11c\ubc84 \uc624\ub958",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "\uc0ad\uc81c \uc131\uacf5",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "\ubc14\ucf54\ub4dc\ub97c \ucc3e\uc744 \uc218 \uc5c6\uc74c",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/barcodes/type/{barcodeType}": {
+            "get": {
+                "tags": [
+                    "Barcode API"
+                ],
+                "summary": "\ud0c0\uc785\ubcc4 \ubc14\ucf54\ub4dc \uc870\ud68c",
+                "description": "\ubc14\ucf54\ub4dc \ud0c0\uc785\ubcc4\ub85c \ubc14\ucf54\ub4dc \ubaa9\ub85d\uc744 \uc870\ud68c\ud569\ub2c8\ub2e4",
+                "operationId": "getBarcodesByType",
+                "parameters": [
+                    {
+                        "name": "barcodeType",
+                        "in": "path",
+                        "description": "\ubc14\ucf54\ub4dc \ud0c0\uc785 (\uc608: EAN13, UPC, Code128)",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "\uc11c\ubc84 \uc624\ub958",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "\uc870\ud68c \uc131\uacf5",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/barcodes/stats/count": {
+            "get": {
+                "tags": [
+                    "Barcode API"
+                ],
+                "summary": "\ubc14\ucf54\ub4dc \ud1b5\uacc4",
+                "description": "\ubc14\ucf54\ub4dc \ucd1d \uac1c\uc218 \ud1b5\uacc4\ub97c \uc870\ud68c\ud569\ub2c8\ub2e4",
+                "operationId": "getBarcodesStats",
+                "responses": {
+                    "200": {
+                        "description": "\ud1b5\uacc4 \uc870\ud68c \uc131\uacf5",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "\uc11c\ubc84 \uc624\ub958",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/barcodes/search": {
+            "get": {
+                "tags": [
+                    "Barcode API"
+                ],
+                "summary": "\uc81c\ud488\uba85\uc73c\ub85c \ubc14\ucf54\ub4dc \uac80\uc0c9",
+                "description": "\uc81c\ud488\uba85\uc73c\ub85c \ubc14\ucf54\ub4dc\ub97c \uac80\uc0c9\ud569\ub2c8\ub2e4",
+                "operationId": "searchBarcodes",
+                "parameters": [
+                    {
+                        "name": "productName",
+                        "in": "query",
+                        "description": "\uac80\uc0c9\ud560 \uc81c\ud488\uba85",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "\uac80\uc0c9 \uc131\uacf5",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "\uc11c\ubc84 \uc624\ub958",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/barcodes/category/{category}": {
+            "get": {
+                "tags": [
+                    "Barcode API"
+                ],
+                "summary": "\uce74\ud14c\uace0\ub9ac\ubcc4 \ubc14\ucf54\ub4dc \uc870\ud68c",
+                "description": "\uce74\ud14c\uace0\ub9ac\ubcc4\ub85c \ubc14\ucf54\ub4dc \ubaa9\ub85d\uc744 \uc870\ud68c\ud569\ub2c8\ub2e4",
+                "operationId": "getBarcodesByCategory",
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "path",
+                        "description": "\uce74\ud14c\uace0\ub9ac\uba85",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "\uc11c\ubc84 \uc624\ub958",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "\uc870\ud68c \uc131\uacf5",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "BarcodeDto": {
+                "type": "object",
+                "properties": {
+                    "barcodeId": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "barcodeValue": {
+                        "type": "string"
+                    },
+                    "barcodeType": {
+                        "type": "string"
+                    },
+                    "productName": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "manufacturer": {
+                        "type": "string"
+                    },
+                    "price": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "createdDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "updatedBy": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
