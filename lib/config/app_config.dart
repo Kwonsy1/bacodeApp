@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 
 class AppConfig {
-  static const String _defaultServerUrl = 'http://192.168.0.168:8080';
+  static const String _defaultServerUrl = 'http://192.168.0.168:9830';
   
   // 안드로이드 에뮬레이터에서 로컬 서버 접근 시
-  static const String _androidEmulatorUrl = 'http://10.0.2.2:8080';
+  static const String _androidEmulatorUrl = 'http://10.0.2.2:9830';
   
   static String get serverUrl {
     // 디버그 모드에서만 로그 출력

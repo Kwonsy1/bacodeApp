@@ -114,7 +114,7 @@ kill [PID]
  :: Spring Boot ::                (v3.4.7)
 
 Started BarcodeServerApplication in 1.063 seconds
-Tomcat started on port 8080 (http)
+Tomcat started on port 9830 (http)
 ```
 
 ## 📖 API 문서
@@ -122,8 +122,8 @@ Tomcat started on port 8080 (http)
 ### Swagger UI
 서버 실행 후 다음 URL에서 API 문서를 확인할 수 있습니다:
 
-- **Swagger UI**: http://localhost:8080/swagger-ui/index.html
-- **OpenAPI JSON**: http://localhost:8080/v3/api-docs
+- **Swagger UI**: http://localhost:9830/swagger-ui/index.html
+- **OpenAPI JSON**: http://localhost:9830/v3/api-docs
 
 ### API 엔드포인트
 

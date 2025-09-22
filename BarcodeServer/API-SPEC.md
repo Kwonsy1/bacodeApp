@@ -1,7 +1,7 @@
 # Barcode Server API 스펙
 
 ## 기본 정보
-- **Base URL**: `http://localhost:8080` 또는 `http://192.168.0.32:8080`
+- **Base URL**: `http://localhost:9830` 또는 `http://192.168.0.32:9830`
 - **Content-Type**: `application/json`
 - **API 버전**: 1.0.0
 
